@@ -1,5 +1,6 @@
 {
   "projects": {
-    "development": "demo-remix-app"
+    "development": "baqa-fcc2e",
+    "default": "baqa-fcc2e"
   }
 }

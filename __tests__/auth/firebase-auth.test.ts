@@ -1,15 +1,15 @@
-import { installGlobals } from '@remix-run/node';
-import { FirebaseAuth } from '../../app/auth.server/firebase-auth';
-import type { AuthSession } from '../../app/auth.server/auth-types';
+import { installGlobals } from "@remix-run/node";
+import { FirebaseAuth } from "../../app/auth.server/firebase-auth";
+import type { AuthSession } from "../../app/auth.server/auth-types";
 
 const testUserCredentials = {
-  username: 'test@example.com',
-  password: 'test123',
+  username: "test@example.com",
+  password: "test123",
 };
 
 const sessionMock: AuthSession = {
   getAuthSession: function (): Promise<any> {
-    return Promise.resolve('getAuthSession');
+    return Promise.resolve("getAuthSession");
   },
 
   createAuthSession: function (data): any {
@@ -17,14 +17,14 @@ const sessionMock: AuthSession = {
       status: 200,
       json: () =>
         Promise.resolve({
-          status: 'success',
+          status: "success",
           data,
         }),
     };
   },
 
   destroyAuthSession: function (): Promise<any> {
-    return Promise.resolve('destroyAuthSession');
+    return Promise.resolve("destroyAuthSession");
   },
 };
 
@@ -40,11 +40,11 @@ afterAll(async () => {
   return await clearEmulatorAccounts();
 });
 
-describe('FirebaseAuth', () => {
-  it('can create an account', async () => {
+describe("FirebaseAuth", () => {
+  it("can create an account", async () => {
     const newUser = {
-      username: 'new@example.com',
-      password: 'new123',
+      username: "new@example.com",
+      password: "new123",
     };
 
     let res = await auth.createAccount(newUser);
@@ -52,7 +52,7 @@ describe('FirebaseAuth', () => {
 
     // check the api
     expect(res.status).toEqual(201);
-    expect(data.status).toEqual('success');
+    expect(data.status).toEqual("success");
     // TODO: could expand the following to check for expected props
     expect(data.user).not.toBe(undefined);
 
@@ -60,7 +60,7 @@ describe('FirebaseAuth', () => {
     expect(await isEmailRegistered(data.user.email)).toEqual(true);
   });
 
-  it('performs login', async () => {
+  it("performs login", async () => {
     // login user
 
     type UType = {
@@ -80,15 +80,15 @@ describe('FirebaseAuth', () => {
     // TODO: spy on session mock createAuthSession for called with
   });
 
-  it('performs logout', () => {
+  it("performs logout", () => {
     expect(true).toEqual(false);
   });
 
-  it('checks for required user', () => {
+  it("checks for required user", () => {
     expect(true).toEqual(false);
   });
 
-  it('returns current the user', () => {
+  it("returns current the user", () => {
     expect(true).toEqual(false);
   });
 });
@@ -96,9 +96,12 @@ describe('FirebaseAuth', () => {
 installGlobals();
 
 function clearEmulatorAccounts(): Promise<Response> {
-  return fetch('http://localhost:9099/emulator/v1/projects/demo-remix-app/accounts', {
-    method: 'delete',
-  });
+  return fetch(
+    "http://localhost:9099/emulator/v1/projects/baqa-fcc2e/accounts",
+    {
+      method: "delete",
+    }
+  );
 }
 
 function createEmulatorAccount(): Promise<Response> {
@@ -106,9 +109,9 @@ function createEmulatorAccount(): Promise<Response> {
     `http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signUp?key=123`,
 
     {
-      method: 'post',
+      method: "post",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         email: testUserCredentials.username,
@@ -124,13 +127,13 @@ async function isEmailRegistered(email: string): Promise<boolean> {
     `http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:createAuthUri?key=123`,
 
     {
-      method: 'post',
+      method: "post",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         identifier: email,
-        continueUri: 'http://localhost:9099/dummy-uri',
+        continueUri: "http://localhost:9099/dummy-uri",
       }),
     }
   );

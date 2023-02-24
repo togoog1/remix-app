@@ -9,7 +9,7 @@
     "build": "remix build",
     "dev": "remix dev",
     "emulators": "npx firebase emulators:start --project development --only auth,firestore --import=./firebase-data",
-    "emulators:export": "npx firebase emulators:export ./firebase-data --project demo-remix-app"
+    "emulators:export": "npx firebase emulators:export ./firebase-data --project baqa-fcc2e"
   },
   "dependencies": {
     "@remix-run/node": "^1.7.1",
